@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — Central de Viagens</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+
+<div class="card shadow-sm" style="width: 100%; max-width: 400px;">
+  <div class="card-body p-4">
+    <h4 class="mb-1 fw-bold"><i class="bi bi-airplane me-2"></i>Central de Viagens</h4>
+    <p class="text-muted mb-4">Faça login para continuar</p>
+
+    {% if form.errors %}
+    <div class="alert alert-danger">Usuário ou senha inválidos.</div>
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="id_username" class="form-label">Usuário</label>
+        <input type="text" name="username" id="id_username" class="form-control" autofocus required>
+      </div>
+      <div class="mb-3">
+        <label for="id_password" class="form-label">Senha</label>
+        <input type="password" name="password" id="id_password" class="form-control" required>
+      </div>
+      <input type="hidden" name="next" value="{{ next }}">
+      <button type="submit" class="btn btn-primary w-100">Entrar</button>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

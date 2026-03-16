@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4 class="fw-bold mb-0">Ofícios</h4>
+  <a href="{% url 'oficio_step1' %}" class="btn btn-primary btn-sm">
+    <i class="bi bi-plus-lg me-1"></i>Novo Ofício
+  </a>
+</div>
+
+<!-- Filters -->
+<form method="get" class="row g-2 mb-3">
+  <div class="col-md-4">
+    <input type="text" name="busca" class="form-control form-control-sm"
+           placeholder="Buscar..." value="{{ filters.busca }}">
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-sm btn-outline-secondary">Filtrar</button>
+  </div>
+</form>
+
+<!-- List -->
+{% if object_list %}
+<div class="table-responsive">
+  <table class="table table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>Número</th>
+        <th>Assunto</th>
+        <th>Criado em</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for obj in object_list %}
+      <tr>
+        <td>{{ obj.numero }}</td>
+        <td>{{ obj.assunto }}</td>
+        <td>{{ obj.criado_em|date:"d/m/Y" }}</td>
+        <td class="text-end">
+          <a href="#" class="btn btn-sm btn-outline-primary">Ver</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% include "includes/pagination.html" %}
+{% else %}
+<div class="text-center text-muted py-5">
+  <i class="bi bi-inbox fs-1"></i>
+  <p class="mt-2">Nenhum ofício encontrado.</p>
+</div>
+{% endif %}
+{% endblock %}
