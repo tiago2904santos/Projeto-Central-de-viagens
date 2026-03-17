@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Selecionar documento - Central de Viagens{% endblock %}
+{% block page_title %}Selecionar documento{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="page-header-cadastro">
+        <div>
+            <h1 class="mb-1">Seleção de documentos</h1>
+            <p class="text-muted mb-0">Escolha o fluxo documental que deseja abrir.</p>
+        </div>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-12 col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="h6">Ofícios</h2>
+                    <p class="text-muted small">Fluxo completo com wizard, justificativa e resumo.</p>
+                    <a href="{% url 'documentos:oficios_lista' %}" class="btn btn-primary btn-sm">Abrir ofícios</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="h6">Roteiros</h2>
+                    <p class="text-muted small">Biblioteca de roteiros reutilizáveis para ofícios.</p>
+                    <a href="{% url 'documentos:roteiros_lista' %}" class="btn btn-outline-primary btn-sm">Abrir roteiros</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

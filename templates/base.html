@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Central de Viagens{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="d-flex {% if not user.is_authenticated %}login-page{% endif %}">
+    {% if request.path != '/login/' %}
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="{% url 'documentos:hub' %}" class="sidebar-brand">
+                <i class="bi bi-geo-alt-fill"></i>
+                <span>Central de Viagens</span>
+            </a>
+        </div>
+        <nav class="sidebar-nav" id="sidebarNav">
+            <ul class="sidebar-groups">
+                {% for item in sidebar_menu.items %}
+                <li class="sidebar-group-shell">
+                    <a href="{{ item.url }}" class="sidebar-direct-link {% if item.active %}active{% endif %}">
+                        <span class="sidebar-group-heading">
+                            {% if item.icon %}<i class="{{ item.icon }}" aria-hidden="true"></i>{% endif %}
+                            <span class="sidebar-group-text">{{ item.label }}</span>
+                        </span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="sidebar-footer-divider" aria-hidden="true"></div>
+            <div class="sidebar-user-block">
+                {% if user.is_authenticated %}
+                <span class="sidebar-user-name">{{ user.get_full_name|default:user.username }}</span>
+                <a href="{% url 'core:logout' %}" class="sidebar-logout">Sair</a>
+                {% else %}
+                <span class="sidebar-user-name">Visitante</span>
+                <a href="{% url 'core:login' %}" class="sidebar-logout">Entrar</a>
+                {% endif %}
+            </div>
+        </div>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    <button type="button" class="sidebar-toggle d-lg-none" id="sidebarToggle" aria-label="Alternar menu">
+        <i class="bi bi-list"></i>
+    </button>
+    {% endif %}
+
+    <div class="main-wrapper flex-grow-1">
+        {% if user.is_authenticated and not hide_page_header %}
+        <header class="main-header">
+            <div class="container-fluid">
+                <h1 class="page-title mb-0">{% block page_title %}{% endblock %}</h1>
+            </div>
+        </header>
+        {% endif %}
+
+        <main class="main-content">
+            {% if messages %}
+            <div class="container-fluid py-2" id="django-messages-container">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" data-autodismiss="true" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/masks.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var sidebar = document.getElementById('sidebar');
+            var sidebarToggle = document.getElementById('sidebarToggle');
+            var sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+            function setSidebarOpen(isOpen) {
+                if (!sidebar) return;
+                sidebar.classList.toggle('show', isOpen);
+                if (sidebarBackdrop) {
+                    sidebarBackdrop.classList.toggle('show', isOpen);
+                }
+                document.body.classList.toggle('sidebar-open', isOpen);
+            }
+
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', function() {
+                    setSidebarOpen(!sidebar.classList.contains('show'));
+                });
+            }
+
+            if (sidebarBackdrop) {
+                sidebarBackdrop.addEventListener('click', function() {
+                    setSidebarOpen(false);
+                });
+            }
+
+            var alerts = document.querySelectorAll('.alert[data-autodismiss="true"]');
+            alerts.forEach(function(el) {
+                setTimeout(function() {
+                    el.classList.add('fade-out');
+                    setTimeout(function() {
+                        if (el.parentNode) el.parentNode.removeChild(el);
+                    }, 500);
+                }, 3000);
+            });
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Documentos derivados - Central de Viagens{% endblock %}
+{% block page_title %}Documentos derivados{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="page-header-cadastro">
+        <div>
+            <h1 class="mb-1">Documentos derivados</h1>
+            <p class="text-muted mb-0">Acompanhe os documentos relacionados aos ofícios cadastrados.</p>
+        </div>
+        <a href="{% url 'documentos:oficios_lista' %}" class="btn btn-outline-secondary">Voltar para ofícios</a>
+    </div>
+
+    <div class="card filter-card">
+        <div class="card-body py-3">
+            <form method="get" class="row g-2 align-items-end">
+                <div class="col-12 col-md-4">
+                    <label class="form-label small text-muted">Busca</label>
+                    <input class="form-control form-control-sm" type="text" name="q" value="{{ filters.q }}" placeholder="Nome do documento">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-outline-primary btn-sm">Filtrar</button>
+                    <a href="#" class="btn btn-outline-secondary btn-sm">Limpar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-hover table-cadastro mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Documento</th>
+                        <th>Ofício</th>
+                        <th>Status</th>
+                        <th class="text-end">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in object_list %}
+                    <tr>
+                        <td>{{ item.nome|default:'Documento' }}</td>
+                        <td>{{ item.oficio_numero|default:'—' }}</td>
+                        <td>{{ item.status|default:'Rascunho' }}</td>
+                        <td class="text-end"><a href="#" class="btn btn-sm btn-outline-primary">Abrir</a></td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="4" class="text-center text-muted py-5">Nenhum documento derivado encontrado.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% include 'includes/pagination.html' %}
+</div>
+{% endblock %}

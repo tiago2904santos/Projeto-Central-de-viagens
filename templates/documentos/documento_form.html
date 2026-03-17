@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Documento - Central de Viagens{% endblock %}
+{% block page_title %}Documento{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="card form-card">
+        <div class="card-body">
+            <h2 class="h5 mb-3">Novo documento</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Título</label>
+                        <input type="text" class="form-control" name="titulo" placeholder="Título do documento">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Tipo</label>
+                        <input type="text" class="form-control" name="tipo" placeholder="Tipo">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Descrição</label>
+                        <textarea class="form-control" rows="4" name="descricao"></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="submit">Salvar</button>
+                    <a href="{% url 'documentos:hub' %}" class="btn btn-outline-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
