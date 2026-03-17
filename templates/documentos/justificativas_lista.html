@@ -60,21 +60,10 @@
                 <tbody>
                     {% for row in object_list %}
                     <tr>
-                        <td>
-                            <div class="fw-semibold">{{ row.oficio.numero_formatado }}</div>
-                            <div class="small text-muted">{{ row.oficio.protocolo_formatado|default:"—" }}</div>
-                        </td>
+                        <td><div class="fw-semibold">{{ row.oficio.numero_formatado }}</div><div class="small text-muted">{{ row.oficio.protocolo_formatado|default:"—" }}</div></td>
                         <td><span class="text-muted">Independente</span></td>
                         <td>{{ row.destinos_display|default:'—' }}</td>
-                        <td>
-                            {% if row.info.status_key == 'preenchida' %}
-                            <span class="badge bg-success">{{ row.info.status_label }}</span>
-                            {% elif row.info.status_key == 'pendente' %}
-                            <span class="badge bg-warning text-dark">{{ row.info.status_label }}</span>
-                            {% else %}
-                            <span class="badge bg-secondary">{{ row.info.status_label|default:'—' }}</span>
-                            {% endif %}
-                        </td>
+                        <td><span class="badge bg-secondary">{{ row.info.status_label|default:'—' }}</span></td>
                         <td>{% if row.info.dias_antecedencia is not None %}{{ row.info.dias_antecedencia }} dia(s){% else %}<span class="text-muted">—</span>{% endif %}</td>
                         <td class="text-end">
                             <a href="{{ row.justificativa_url|default:'#' }}" class="btn btn-sm btn-outline-primary">Abrir</a>

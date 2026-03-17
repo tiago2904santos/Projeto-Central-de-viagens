@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+<div class="col-lg-8">
+
+  <div class="mb-4">
+    <h4 class="fw-bold">{{ page_title }}</h4>
+    <p class="text-muted">{{ wizard_page_title }}</p>
+  </div>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-body p-4">
+      <h5 class="card-title">Resumo do Ofício</h5>
+
+      <div class="alert alert-info">
+        <i class="bi bi-info-circle me-2"></i>
+        Revise as informações antes de confirmar.
+      </div>
+
+      <!-- Resumo dos dados preenchidos virá aqui -->
+      <dl class="row">
+        <dt class="col-sm-4">Número</dt>
+        <dd class="col-sm-8">—</dd>
+
+        <dt class="col-sm-4">Assunto</dt>
+        <dd class="col-sm-8">—</dd>
+
+        <dt class="col-sm-4">Destinatário</dt>
+        <dd class="col-sm-8">—</dd>
+
+        <dt class="col-sm-4">Trechos</dt>
+        <dd class="col-sm-8">—</dd>
+      </dl>
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="d-flex justify-content-between mt-4">
+          <a href="{% url 'oficio_justificativa' %}" class="btn btn-outline-secondary">Voltar</a>
+          <button type="submit" class="btn btn-success">
+            <i class="bi bi-check-lg me-1"></i>Confirmar e Salvar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+</div>
+{% endblock %}
